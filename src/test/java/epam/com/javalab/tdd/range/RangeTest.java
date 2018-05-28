@@ -4,10 +4,12 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static  org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class RangeTest {
@@ -45,13 +47,17 @@ class RangeTest {
     void getLowerBound() {
         assertThat(range1.getLowerBound() == 100, is(true));
         assertThat(range2.getLowerBound() == 50, is(false));
-        assertThat(range2.getLowerBound(), is(300L));
+        assertTrue(range2.getLowerBound() != 50);
+        assertEquals(range3.getLowerBound(), 150L, "Lower Bound is not equal 150.");
+        assertNotEquals(range3.getLowerBound(), 400L, "Lower Bound is equal 400.");
+
     }
 
     @Test
     void getUpperBound() {
         assertThat(range1.getUpperBound(), is(200L));
         assertThat(range3.getUpperBound(), is(350L));
+        assertFalse(range2.getUpperBound() != 400);
     }
 
     @ParameterizedTest
@@ -63,8 +69,13 @@ class RangeTest {
     }
 
     @Test
-    void asList() {
+    void asList() throws RangeWrongBounds {
+        Iterable<Long> listOne = new ArrayList<>(Arrays.asList(1L,2L,3L,4L,5L));
+        Range range4 = new Range(1, 5);
 
+        assertIterableEquals(listOne, range4.asList());
+        assertIterableEquals(listOne, range4.asList());
+        assertNotNull(range3.asList());
     }
 
     @Test
@@ -72,7 +83,7 @@ class RangeTest {
     void iterator() {
     }
 
-    @Test
+    @RepeatedTest(5)
     void rangeThrows() throws RangeWrongBounds {
         Throwable exception = assertThrows(RangeWrongBounds.class, () -> {
             Range range0 = new Range(200, 100);
