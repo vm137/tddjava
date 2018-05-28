@@ -37,7 +37,7 @@ public class Range implements IRange, Iterable<Long> {
 
     public boolean isConcurrent(Range otherRange) {
         return otherRange.getLowerBound() >= lowerBound && otherRange.getLowerBound() <= upperBound
-                || otherRange.getUpperBound() >= upperBound && otherRange.getUpperBound() <= upperBound;
+                || otherRange.getLowerBound() <= upperBound;
     }
 
     public long getLowerBound() {
