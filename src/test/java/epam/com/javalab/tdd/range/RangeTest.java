@@ -13,7 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class RangeTest {
-    private Range range1, range2, range3;
+
+    private Range range1;
+    private Range range2;
+    private Range range3;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -69,11 +72,11 @@ class RangeTest {
     }
 
     @Test
+    @DisplayName("== asList")
     void asList() throws RangeWrongBounds {
         Iterable<Long> listOne = new ArrayList<>(Arrays.asList(1L,2L,3L,4L,5L));
         Range range4 = new Range(1, 5);
 
-        assertIterableEquals(listOne, range4.asList());
         assertIterableEquals(listOne, range4.asList());
         assertNotNull(range3.asList());
     }
@@ -81,6 +84,8 @@ class RangeTest {
     @Test
     @DisplayName("== iterator")
     void iterator() {
+        assertTrue(range3.iterator().hasNext());
+        assertThat(range3.iterator().next(), is(150L));
     }
 
     @RepeatedTest(5)
@@ -95,4 +100,5 @@ class RangeTest {
     @DisplayName("== iterator disabled")
     void iterator2() {
     }
+
 }
