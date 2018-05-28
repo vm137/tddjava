@@ -1,8 +1,6 @@
 package epam.com.javalab.tdd.range;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -21,6 +19,7 @@ class RangeTest {
     @DisplayName("== isBefore")
     void    isBefore() throws RangeWrongBounds {
         assertThat(range1.isBefore(range2), is(true));
+        assertThat(range1.isBefore(range3), is(false));
     }
 
     @Test
@@ -48,6 +47,13 @@ class RangeTest {
     }
 
     @Test
+    @DisplayName("== iterator")
     void iterator() {
+    }
+
+    @Disabled
+    @Test
+    @DisplayName("== iterator disabled")
+    void iterator2() {
     }
 }

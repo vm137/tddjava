@@ -27,16 +27,17 @@ public class Range implements IRange, Iterable<Long> {
 
     public boolean isBefore(Range otherRange) {
         // checks if this.Range is before otherRange
-        return otherRange.getUpperBound() > lowerBound;
-    }
-
-    public boolean isAfter(Range otherRange) {
-        // checks if otherRange is after this.Range
         return upperBound < otherRange.getLowerBound();
     }
 
+    public boolean isAfter(Range otherRange) {
+        // checks if this.Range is after otherRange
+        return lowerBound > otherRange.getUpperBound();
+    }
+
     public boolean isConcurrent(Range otherRange) {
-        return lowerBound >= otherRange.getUpperBound() || upperBound >= otherRange.getLowerBound();
+        return otherRange.getLowerBound() >= lowerBound && otherRange.getLowerBound() <= upperBound
+                || otherRange.getUpperBound() >= upperBound && otherRange.getUpperBound() <= upperBound;
     }
 
     public long getLowerBound() {
